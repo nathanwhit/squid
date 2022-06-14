@@ -182,7 +182,8 @@ export class Server {
 
     @def
     pgPool() {
-        let cfg = createPoolConfig()
+        let cfg = createPoolConfig() as any
+        cfg.ssl = process.env.DB_SSL_ENABLED ? {rejectUnauthorized: false} : undefined
         return new Pool(cfg)
     }
 
