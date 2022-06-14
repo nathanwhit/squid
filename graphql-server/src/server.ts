@@ -190,7 +190,8 @@ export class Server {
     async typeormConnection(): Promise<Connection> {
         let {createOrmConfig} = await import('@subsquid/typeorm-config')
         let {createConnection} = await import('typeorm')
-        let cfg = createOrmConfig({projectDir: this.dir})
+        let cfg = createOrmConfig({projectDir: this.dir}) as any
+        cfg.ssl = process.env.DB_SSL_ENABLED ? {rejectUnauthorized: false} : undefined
         return createConnection(cfg)
     }
 

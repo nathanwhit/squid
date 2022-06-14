@@ -20,7 +20,8 @@ export interface DbOptions {
 
 export class Db {
     static async connect(options: DbOptions): Promise<Db> {
-        let cfg = createOrmConfig()
+        let cfg = createOrmConfig() as any
+        cfg.ssl = process.env.DB_SSL_ENABLED ? {rejectUnauthorized: false} : undefined
         let con = await createConnection(cfg)
         return new Db(con, options)
     }

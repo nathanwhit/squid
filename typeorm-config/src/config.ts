@@ -10,6 +10,9 @@ export interface ConnectionOptions {
     database: string
     username: string
     password: string
+    ssl?: {
+        rejectUnauthorized: boolean
+    }
 }
 
 
@@ -19,7 +22,8 @@ export function createConnectionOptions(): ConnectionOptions {
         port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
         database: process.env.DB_NAME || 'postgres',
         username: process.env.DB_USER || 'postgres',
-        password: process.env.DB_PASS || 'postgres'
+        password: process.env.DB_PASS || 'postgres',
+        ssl: process.env.DB_SSL_ENABLED ? {rejectUnauthorized: false} : undefined
     }
 }
 
